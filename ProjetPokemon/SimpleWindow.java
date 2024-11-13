@@ -56,7 +56,7 @@ public class SimpleWindow {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon background = new ImageIcon("C:\\Users\\basti\\Documents\\Epitech working\\poke\\ProjetPokemon\\images\\Terrain.png");
+                ImageIcon background = new ImageIcon("ProjetPokemon/images/Terrain.png");
                 g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
