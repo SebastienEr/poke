@@ -1,3 +1,5 @@
+
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +22,6 @@ public class GameController {
         this.houseMapData = loadMap("housemap.txt");
         this.houseOverlayData = loadMap("housemapoverlay.txt");
 
-        // Start with the world map
         this.currentMapData = worldMapData;
         this.currentOverlayData = worldOverlayData;
     }

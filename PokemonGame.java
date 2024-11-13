@@ -1,4 +1,9 @@
+
 import javax.swing.*;
+
+
+
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,7 +33,6 @@ public class PokemonGame extends JFrame implements KeyListener {
     private Player player;
     private BufferedImage buffer;
 
-    // Variables pour gérer les touches enfoncées
     private boolean upPressed, downPressed, leftPressed, rightPressed, sprintPressed;
 
     private Timer gameTimer;
@@ -51,10 +55,8 @@ public class PokemonGame extends JFrame implements KeyListener {
         setFocusable(true);
         
 
-        // Charger les images
         loadImages();
 
-        // Charger les données de la carte
         mapData = loadMap("map.txt");
         overlayData = loadMap("map1.txt");
         houseMapData = loadMap("housemap.txt");
@@ -63,11 +65,10 @@ public class PokemonGame extends JFrame implements KeyListener {
         player = new Player(10, 10, TILE_SIZE);
         buffer = new BufferedImage(VIEW_WIDTH * TILE_SIZE, VIEW_HEIGHT * TILE_SIZE, BufferedImage.TYPE_INT_ARGB);
 
-        // Démarrer la boucle de jeu
         gameTimer = new Timer(16, e -> {
             gameUpdate();
             repaint();
-            Toolkit.getDefaultToolkit().sync(); // Ajoutez ceci pour forcer le rafraîchissement
+            Toolkit.getDefaultToolkit().sync(); 
         });
         gameTimer.start();
         
@@ -110,6 +111,10 @@ public class PokemonGame extends JFrame implements KeyListener {
         }
         return mapRows.toArray(new int[0][]);
     }
+
+    // private void openSimpleWindow() {
+    //     SwingUtilities.invokeLater(() -> SimpleWindow.createAndShowGUI());
+    // }
 
     private void gameUpdate() {
         boolean moving = false;
@@ -189,7 +194,6 @@ public class PokemonGame extends JFrame implements KeyListener {
     }
 
     private void drawMap(Graphics2D g2d, int[][] mapData, int offsetX, int offsetY) {
-        // Votre méthode existante, inchangée
         for (int row = 0; row < VIEW_HEIGHT; row++) {
             for (int col = 0; col < VIEW_WIDTH; col++) {
                 int mapX = col + offsetX;
@@ -198,10 +202,9 @@ public class PokemonGame extends JFrame implements KeyListener {
                 if (mapY >= 0 && mapY < mapData.length && mapX >= 0 && mapX < mapData[0].length) {
                     int tileType = mapData[mapY][mapX];
 
-                    // Vérifier si c'est une partie d'une grande tuile qui ne doit pas être dessinée
                     if (tileType == 3 || tileType == 4 || tileType == 15) {
                         if (!isTopLeftOfLargeTile(mapData, mapX, mapY, tileType)) {
-                            continue; // Ne pas dessiner cette tuile
+                            continue; 
                         }
                     }
 
@@ -211,7 +214,6 @@ public class PokemonGame extends JFrame implements KeyListener {
                         int x = col * TILE_SIZE;
                         int y = row * TILE_SIZE;
 
-                        // Ajuster la taille des tuiles spéciales
                         if (tileType == 8) {
                             g2d.drawImage(tileImage, x, y + 16, TILE_SIZE, TILE_SIZE, this);
                         } else if (tileType == 3 || tileType == 4 || tileType == 15 || tileType == 5)  {
@@ -227,7 +229,6 @@ public class PokemonGame extends JFrame implements KeyListener {
     }
 
     private Dimension getTileSize(int tileType) {
-        // Votre méthode existante, inchangée
         switch (tileType) {
             case 3: // Maison
                 return new Dimension(3, 3);
@@ -243,7 +244,6 @@ public class PokemonGame extends JFrame implements KeyListener {
     }
 
     private boolean isTopLeftOfLargeTile(int[][] mapData, int mapX, int mapY, int tileType) {
-        // Votre méthode existante, inchangée
         Dimension size = getTileSize(tileType);
         int tileWidth = size.width;
         int tileHeight = size.height;
@@ -307,12 +307,14 @@ public class PokemonGame extends JFrame implements KeyListener {
             case KeyEvent.VK_SHIFT:
                 sprintPressed = false;
                 break;
+            // case KeyEvent.VK_A: // Touche 'O' pour ouvrir SimpleWindow
+            //     openSimpleWindow();
+            //     break;
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // Non utilisé
     }
 
     public static void main(String[] args) {

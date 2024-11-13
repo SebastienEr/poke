@@ -1,3 +1,5 @@
+
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -30,13 +32,11 @@ public class Player {
         }
     }
 
-    // Correction : la méthode loadSprites doit accepter deux arguments
     private void loadSprites(BufferedImage walkSpriteSheet, BufferedImage runSpriteSheet) {
         int spriteWidth = walkSpriteSheet.getWidth() / 4;  
         int spriteHeight = walkSpriteSheet.getHeight() / 4;  
         sprites = new BufferedImage[2][4][4];  // [0]: marche, [1]: course
 
-        // Charger les sprites de marche
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
                 sprites[0][row][col] = walkSpriteSheet.getSubimage(
@@ -48,7 +48,6 @@ public class Player {
             }
         }
 
-        // Charger les sprites de course
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
                 sprites[1][row][col] = runSpriteSheet.getSubimage(
@@ -138,7 +137,7 @@ public class Player {
 
     private void animate() {
         animationCounter++;
-        int animationSpeed = running ? 5 : 10; // Ajuster ces valeurs selon vos préférences
+        int animationSpeed = running ? 5 : 10; 
 
         if (animationCounter >= animationSpeed) {
             animationFrame = (animationFrame + 1) % 4;
@@ -158,7 +157,6 @@ public class Player {
 
         int spriteIndex = running ? 1 : 0; // 0 pour marche, 1 pour course
 
-        // Correction : s'assurer que l'image passée est un BufferedImage, pas un tableau
         g.drawImage(sprites[spriteIndex][direction][animationFrame], centerX, centerY, playerWidth, playerHeight, null);
     }
 }
