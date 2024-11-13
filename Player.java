@@ -19,11 +19,11 @@ public class Player {
         this.x = startX * tileSize;
         this.y = startY * tileSize;
         this.TILE_SIZE = tileSize;
-        this.moveDistance = tileSize / 18.0; // Vitesse de marche par défaut
+        // this.moveDistance = tileSize / 18.0; // Vitesse de marche par défaut
 
         try {
-            BufferedImage walkSpriteSheet = ImageIO.read(getClass().getResource("src\\Hero-M-Walk.png"));
-            BufferedImage runSpriteSheet = ImageIO.read(getClass().getResource("src\\Hero-M-Run.png"));
+            BufferedImage walkSpriteSheet = ImageIO.read(getClass().getResource("src/Hero-M-Walk.png"));
+            BufferedImage runSpriteSheet = ImageIO.read(getClass().getResource("src/Hero-M-Run.png"));
             loadSprites(walkSpriteSheet, runSpriteSheet);
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,6 +86,9 @@ public class Player {
         return running;
     }
 
+    
+
+    
     public void moveUp() {
         y = Math.max(0, y - moveDistance);
         direction = 3;  
@@ -111,7 +114,27 @@ public class Player {
     }
 
 
+    public void setX(double x) {
+        this.x = x;
+    }
     
+    public void setY(double y) {
+        this.y = y;
+    }
+    
+    public double getX() {
+        return x;
+    }
+    
+    public double getY() {
+        return y;
+    }
+    
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+    
+
 
     private void animate() {
         animationCounter++;

@@ -57,7 +57,7 @@ public class GameController {
     }
 
     public void updatePlayerPosition(Player player) {
-        if (!inHouse && player.isOnSpecificTile(currentOverlayData, 3)) {
+        if (!inHouse && currentOverlayData[player.getTileY()][player.getTileX()] == 3) {
             enterHouse(player);
         } else if (inHouse && player.getTileX() == 1 && player.getTileY() == 1) { // Example exit position
             exitHouse(player);

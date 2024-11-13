@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class PokemonGame extends JFrame implements KeyListener {
     private final int TILE_SIZE = 64;
     private final int VIEW_WIDTH = 14;
@@ -21,6 +22,8 @@ public class PokemonGame extends JFrame implements KeyListener {
     private int[][] houseMapData;
     private int[][] houseOverlayData;
     private boolean inHouse = false;
+    
+
 
     private Player player;
     private BufferedImage buffer;
@@ -30,15 +33,23 @@ public class PokemonGame extends JFrame implements KeyListener {
 
     private Timer gameTimer;
 
+
+
+    
+
  
 
     public PokemonGame() {
-        setTitle("Jeux Pokemon - Caméra centrée");
+        setTitle("Jeux Pokemon");
+        System.setProperty("sun.java2d.opengl", "true");
+
         setSize(VIEW_WIDTH * TILE_SIZE, VIEW_HEIGHT * TILE_SIZE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setLocationRelativeTo(null);
         addKeyListener(this);
         setFocusable(true);
+        
 
         // Charger les images
         loadImages();
@@ -56,8 +67,10 @@ public class PokemonGame extends JFrame implements KeyListener {
         gameTimer = new Timer(16, e -> {
             gameUpdate();
             repaint();
+            Toolkit.getDefaultToolkit().sync(); // Ajoutez ceci pour forcer le rafraîchissement
         });
         gameTimer.start();
+        
     }
 
     private void loadImages() {
@@ -122,10 +135,10 @@ public class PokemonGame extends JFrame implements KeyListener {
         if (moving) {
             if (sprintPressed) {
                 player.setRunning(true);
-                player.setSpeed(TILE_SIZE / 9.0); // Vitesse de course
+                player.setSpeed(TILE_SIZE / 11.0); // Vitesse de course
             } else {
                 player.setRunning(false);
-                player.setSpeed(TILE_SIZE / 18.0); // Vitesse de marche
+                player.setSpeed(TILE_SIZE / 20.0); // Vitesse de marche
             }
         } else {
             player.setRunning(false);
@@ -201,7 +214,7 @@ public class PokemonGame extends JFrame implements KeyListener {
                         // Ajuster la taille des tuiles spéciales
                         if (tileType == 8) {
                             g2d.drawImage(tileImage, x, y + 16, TILE_SIZE, TILE_SIZE, this);
-                        } else if (tileType == 3 || tileType == 4 || tileType == 15)  {
+                        } else if (tileType == 3 || tileType == 4 || tileType == 15 || tileType == 5)  {
                             Dimension size = getTileSize(tileType);
                             g2d.drawImage(tileImage, x, y, TILE_SIZE * size.width, TILE_SIZE * size.height, this);
                         } else {
@@ -222,6 +235,8 @@ public class PokemonGame extends JFrame implements KeyListener {
                 return new Dimension(2, 2);
             case 15: // Maison
                 return new Dimension(2, 2);
+            case 5: // Herbe
+                return new Dimension(1, 1);
             default:
                 return new Dimension(1, 1);
         }
@@ -255,6 +270,7 @@ public class PokemonGame extends JFrame implements KeyListener {
         // Mise à jour des touches enfoncées
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
+            System.out.println("UP");
                 upPressed = true;
                 break;
             case KeyEvent.VK_DOWN:
@@ -266,7 +282,7 @@ public class PokemonGame extends JFrame implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 rightPressed = true;
                 break;
-            case KeyEvent.VK_CONTROL:
+            case KeyEvent.VK_SHIFT:
                 sprintPressed = true;
                 break;
         }
@@ -288,7 +304,7 @@ public class PokemonGame extends JFrame implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 rightPressed = false;
                 break;
-            case KeyEvent.VK_CONTROL:
+            case KeyEvent.VK_SHIFT:
                 sprintPressed = false;
                 break;
         }
