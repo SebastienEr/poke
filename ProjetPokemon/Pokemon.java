@@ -1,3 +1,5 @@
+package poke.ProjetPokemon;
+
 public class Pokemon {
     private String name;
     private int maxHp;
@@ -13,6 +15,10 @@ public class Pokemon {
         this.attack = attack;
         this.xp = 0;
         this.level = 1;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getMaxHp() {
@@ -52,19 +58,26 @@ public class Pokemon {
             hp = maxHp; 
         }
     }
-
+    
     public void gainXp(int amount) {
         xp += amount;
-        if (xp >= level * 100) {
+        while (xp >= level * 100) {
+            xp -= level * 100;
             levelUp();
         }
     }
+    
 
     private void levelUp() {
         level++;
         xp = 0;
-        maxHp += 10;
-        hp = maxHp;
-        attack += 5;
+        increaseStats();
+    }
+    
+
+    private void increaseStats() {
+        maxHp += 10; // Increase max HP by 10
+        attack += 5; // Increase attack by 5
+        hp = maxHp; // Restore HP to max HP
     }
 }
